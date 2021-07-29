@@ -1,0 +1,25 @@
+version: '2'
+
+networks:
+  app-tier:
+    driver: bridge
+
+services:
+  postgresql:
+    image: docker.io/bitnami/postgresql:13
+    restart: always
+    ports:
+      # A standard PostgreSQL port is 5432.
+      - '5432:5432'
+    volumes:
+      - type: bind
+        # Path to the local (host) data folder.
+        source: /media/username/disk_x/Docker/PostgreSQL/m1/postgresql_data
+        target: /bitnami/postgresql
+    environment:
+      - 'POSTGRESQL_USERNAME=test'
+      - 'POSTGRESQL_PASSWORD=test'
+      - 'POSTGRESQL_DATABASE=test'
+      - 'POSTGRESQL_POSTGRES_PASSWORD=ThePassword'
+    networks:
+      - app-tier
